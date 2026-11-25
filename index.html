@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>NIGHT CITY CYBERDECK // 10-Feature Cyberpunk DJ &amp; Neon Music Generator</title>
+  <link rel="stylesheet" href="/static/css/styles.css?v=9" />
+</head>
+<body>
+  <!-- Row 1: Cyberdeck Header + Procedural Song Generator + Kaleidoscope + Mix Recorder -->
+  <header class="top-bar">
+    <div class="brand-area">
+      <div class="brand-badge">2077 // DJ</div>
+      <div>
+        <div class="title-flex">
+          <h1>NIGHT CITY CYBERDECK</h1>
+          <span class="track-chip" id="track-codename">TRACK // STANDBY</span>
+        </div>
+        <p class="status-line" id="hud-status">Tap "Generate Cyber Song" or launch a Song Scene below — touch &amp; drag stage to solo!</p>
+      </div>
+    </div>
+
+    <div class="top-controls">
+      <!-- Feature #2: 1-Tap Procedural Cyberpunk Track Generator -->
+      <button type="button" class="gen-song-btn" id="btn-gen-song" title="Procedurally generates a brand-new Cyberpunk beat, gritty bassline, chord progression &amp; neon synth melody!">
+        &#127922; Generate Cyber Song
+      </button>
+
+      <!-- Feature #7: Kaleidoscope Symmetry Laser Mode -->
+      <button type="button" class="cyber-pill-btn" id="btn-kaleidoscope" title="Mirrors your touch lines &amp; circles in 2-way or 4-way multi-color neon lasers + stereo harmony!">
+        &#128302; Mirror Lasers: OFF
+      </button>
+
+      <!-- Multi-Line Fan -->
+      <div class="pill-group" title="Lines per finger drag">
+        <span class="group-lbl">Lines:</span>
+        <button type="button" class="num-btn active" data-count="1">1</button>
+        <button type="button" class="num-btn" data-count="2">2</button>
+        <button type="button" class="num-btn" data-count="3">3</button>
+        <button type="button" class="num-btn" data-count="5">5</button>
+        <button type="button" class="num-btn" data-count="10">10</button>
+      </div>
+
+      <!-- Sound / Color Picker -->
+      <label class="sound-picker">
+        <span>Sound:</span>
+        <select id="color-mode-select">
+          <option value="rainbow" selected>&#127752; Rainbow 10-Sound Cycle</option>
+          <option value="0">Cyan — Blade Runner Brass</option>
+          <option value="1">Pink — Edgerunners Supersaw</option>
+          <option value="2">Green — Acid 303 Pluck</option>
+          <option value="3">Red — Menacing Reese Growl</option>
+          <option value="4">Yellow — Industrial Stab</option>
+          <option value="5">Purple — Dystopian Choir</option>
+          <option value="6">Orange — 808 Sub Slam</option>
+          <option value="7">Ice Blue — Night-City Pluck</option>
+          <option value="8">Magenta — Sci-Fi Laser Zap</option>
+          <option value="9">Chrome — Rain Bell Chime</option>
+        </select>
+      </label>
+
+      <!-- Feature #10: Internal Synth Audio Mix Recorder -->
+      <button type="button" class="rec-mix-btn" id="btn-export-mix" title="Records your live Cyberpunk DJ mix to a downloadable audio file!">
+        &#9210; Rec Audio Mix
+      </button>
+    </div>
+  </header>
+
+  <!-- Row 2: Feature #8 Song Scene Arranger + Feature #5 Interactive 16-Step Neon Beat Matrix -->
+  <section class="scene-matrix-strip">
+    <div class="scenes-group">
+      <span class="strip-lbl">SCENES:</span>
+      <button type="button" class="scene-btn" data-scene="intro">1. Rain Intro</button>
+      <button type="button" class="scene-btn" data-scene="groove">2. Street Groove</button>
+      <button type="button" class="scene-btn" data-scene="build">3. Tension Build</button>
+      <button type="button" class="scene-btn scene-climax" data-scene="drop">4. OVERDRIVE DROP!</button>
+      <button type="button" class="scene-btn scene-stop" id="btn-master-stop">&#9209; Stop</button>
+    </div>
+
+    <!-- Interactive 16-Step Colorful Neon Beat Grid (Tap steps to toggle kicks/snares!) -->
+    <div class="step-matrix-wrap" title="Live 16-Step Cyberpunk Beat Grid — Tap any block to toggle extra drum/synth hits!">
+      <span class="strip-lbl">16-STEP GRID:</span>
+      <div class="step-matrix" id="step-matrix"></div>
+    </div>
+  </section>
+
+  <!-- Riff Recording Progress Banner -->
+  <div class="rec-banner hidden" id="rec-banner">
+    <span id="rec-banner-text">&#128308; Tap or drag on the neon stage to record your riff!</span>
+    <div class="rec-progress-track">
+      <div class="rec-progress-fill" id="rec-progress-fill"></div>
+    </div>
+  </div>
+
+  <!-- Row 3: Full-Screen Multi-Color Neon Touchscreen Stage + Night-City FFT Skyline -->
+  <main class="stage-wrap" id="stage-wrap">
+    <canvas id="synth-canvas"></canvas>
+    <div class="zone-labels" aria-hidden="true">
+      <div class="zone-band">
+        <span>HIGH // BLADE RUNNER LEADS, SIRENS &amp; CHROMATIC LASERS</span>
+        <span class="zone-hint">Dark Cyberpunk Scale Locked &bull; Tap = Neon Reticle Shockwaves</span>
+      </div>
+      <div class="zone-band">
+        <span>MID // EDGERUNNER SUPERSAWS, ACID 303 &amp; KALEIDOSCOPE RIBBONS</span>
+        <span class="zone-hint">Drag Fast = Rainbow Plasma Trail &bull; Mirror Mode = 4-Way Cyber Mandala</span>
+      </div>
+      <div class="zone-band">
+        <span>LOW // REESE NEURO BASS, 808 SLAMS &amp; LIVE NEON SKYLINE SPECTRUM</span>
+        <span class="zone-hint">Live FFT Skyline bounces to your beat along the city horizon below!</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- Row 4: Full Cyberpunk DJ Console (Dual Holo-Turntables, Kaoss Glitch FX, Vocoder & Riff Loopers) -->
+  <footer class="cyber-console">
+    <!-- Console 1: Feature #1 Dual Spinning Neon DJ Turntables + Crossfader -->
+    <div class="console-card">
+      <div class="card-top">
+        <span class="card-title">1. HOLO-TURNTABLES &amp; CROSSFADER</span>
+        <label class="speed-ctrl">
+          <span id="lbl-bpm">106 BPM</span>
+          <input type="range" id="slider-bpm" min="84" max="142" value="106" />
+        </label>
+      </div>
+      <div class="turntable-deck">
+        <div class="jog-wheel jog-cyan" id="jog-a" title="Touch &amp; spin Deck A (Drums) to Vinyl Scratch!">
+          <div class="jog-ring" id="jog-ring-a">
+            <span class="jog-marker"></span>
+            <span class="jog-lbl">DECK A<small>DRUMS</small></span>
+          </div>
+        </div>
+
+        <div class="mixer-center">
+          <select id="beat-style-select" class="cyber-select" title="Select Cyberpunk Beat Style">
+            <option value="nightcity">Night City 2077</option>
+            <option value="outrun">Outrun Highway</option>
+            <option value="industrial">Industrial Boss</option>
+            <option value="bladerunner">Rain 2049</option>
+            <option value="generated">AI Cyber-Seed</option>
+          </select>
+          <label class="xfader-wrap" title="Crossfade between Deck A (Drums) and Deck B (Bass &amp; Synths)">
+            <div class="xfader-labels"><span>A</span><span>MIX</span><span>B</span></div>
+            <input type="range" id="slider-xfade" min="-100" max="100" value="0" />
+          </label>
+        </div>
+
+        <div class="jog-wheel jog-pink" id="jog-b" title="Touch &amp; spin Deck B (Synths/Bass) to Pitch Warp!">
+          <div class="jog-ring" id="jog-ring-b">
+            <span class="jog-marker"></span>
+            <span class="jog-lbl">DECK B<small>SYNTH</small></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Console 2: Feature #4 Hold-to-Glitch Kaoss FX + Feature #6 Robotic Cyber-Vocoder Callouts -->
+    <div class="console-card">
+      <div class="card-top">
+        <span class="card-title">2. PUNCH-IN GLITCH FX &amp; CYBER VOCODER</span>
+        <span class="card-sub">Hold FX / Tap Voice</span>
+      </div>
+      <div class="fx-grid">
+        <button type="button" class="kaoss-btn" data-fx="stutter">&#127744; Stutter</button>
+        <button type="button" class="kaoss-btn" data-fx="tapestop">&#128201; Tape Melt</button>
+        <button type="button" class="kaoss-btn" data-fx="overdrive">&#128293; Overdrive</button>
+        <button type="button" class="kaoss-btn" data-fx="muffle">&#127754; Underwater</button>
+        <button type="button" class="vox-btn" data-vox="NIGHT CITY">&#129302; "Night City"</button>
+        <button type="button" class="vox-btn" data-vox="SYSTEM BREACH">&#9888;&#65039; "Breach"</button>
+        <button type="button" class="vox-btn" data-vox="MAXIMUM OVERDRIVE">&#9889; "Overdrive"</button>
+        <button type="button" class="vox-btn vox-drop" id="btn-vox-drop">&#128165; "DROP IT!"</button>
+      </div>
+    </div>
+
+    <!-- Console 3: Stackable Cyber Stems + Effortless Riff Loopers -->
+    <div class="console-card">
+      <div class="card-top">
+        <span class="card-title">3. CYBER STEMS &amp; TOUCH LOOPERS</span>
+        <button type="button" class="clear-btn" id="btn-clear-layers">Clear Riffs</button>
+      </div>
+      <div class="stems-grid">
+        <button type="button" class="stem-btn" id="btn-stem-drums">&#129345; Drums</button>
+        <button type="button" class="stem-btn" id="btn-stem-bass">&#127928; Grit Bass</button>
+        <button type="button" class="stem-btn" id="btn-stem-pad">&#127756; Dark Pad</button>
+        <button type="button" class="stem-btn" id="btn-stem-arp">&#9889; Neon Arp</button>
+        <button type="button" class="riff-btn" data-slot="0" id="layer-0">&#128308; Rec Riff 1</button>
+        <button type="button" class="riff-btn" data-slot="1" id="layer-1">&#128308; Rec Riff 2</button>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/js/app.js?v=9"></script>
+</body>
+</html>

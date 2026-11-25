@@ -1,0 +1,653 @@
+:root {
+  --bg-deep: #03040a;
+  --bg-panel: #080a14;
+  --bg-card: #0c1020;
+  --cyber-yellow: #fcee0a;
+  --cyber-cyan: #00f5ff;
+  --cyber-pink: #ff1cf7;
+  --cyber-red: #ff0055;
+  --cyber-green: #00ff95;
+  --cyber-violet: #a855f7;
+  --text-main: #f5f8ff;
+  --text-dim: #8da2c6;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg-deep);
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Row 1: Top Header (Zero CSS blur for fast software Wayland rendering) */
+.top-bar {
+  background: var(--bg-panel);
+  border-bottom: 2px solid rgba(252, 238, 10, 0.5);
+  padding: 6px 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  z-index: 20;
+}
+
+.brand-area {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.brand-badge {
+  background: var(--cyber-yellow);
+  color: #03040a;
+  font-weight: 900;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  padding: 6px 7px;
+  border-radius: 4px;
+}
+
+.title-flex {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand-area h1 {
+  font-size: 0.96rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  color: var(--cyber-yellow);
+}
+
+.track-chip {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.66rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: rgba(255, 28, 247, 0.18);
+  border: 1px solid var(--cyber-pink);
+  color: #ff9ef9;
+}
+
+.status-line {
+  font-size: 0.69rem;
+  color: var(--cyber-cyan);
+}
+
+.top-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.gen-song-btn {
+  background: linear-gradient(90deg, var(--cyber-yellow), #ffae00);
+  color: #03040a;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  padding: 5px 11px;
+  font-size: 0.74rem;
+  font-weight: 900;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.cyber-pill-btn {
+  background: #101730;
+  color: var(--cyber-cyan);
+  border: 1px solid rgba(0, 245, 255, 0.42);
+  border-radius: 5px;
+  padding: 5px 9px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.cyber-pill-btn.active {
+  background: rgba(255, 28, 247, 0.28);
+  border-color: var(--cyber-pink);
+  color: #ffffff;
+}
+
+.pill-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: #050811;
+  border: 1px solid rgba(0, 245, 255, 0.28);
+  border-radius: 5px;
+  padding: 2px 6px;
+}
+
+.group-lbl {
+  font-size: 0.69rem;
+  font-weight: 700;
+  color: var(--text-dim);
+}
+
+.num-btn {
+  min-width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 245, 255, 0.22);
+  background: #0e162b;
+  color: var(--text-main);
+  font-weight: 800;
+  font-size: 0.7rem;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.num-btn.active {
+  background: var(--cyber-cyan);
+  color: #03040a;
+  border-color: #ffffff;
+}
+
+.sound-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #050811;
+  border: 1px solid rgba(0, 245, 255, 0.3);
+  border-radius: 5px;
+  padding: 3px 7px;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+
+.sound-picker select, .cyber-select {
+  background: #090e1d;
+  color: var(--text-main);
+  border: none;
+  outline: none;
+  font-weight: 700;
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+
+.cyber-select {
+  border: 1px solid rgba(252, 238, 10, 0.4);
+  border-radius: 4px;
+  padding: 3px 5px;
+  width: 100%;
+}
+
+.rec-mix-btn {
+  background: rgba(255, 0, 85, 0.16);
+  color: #ff9ec0;
+  border: 1px solid var(--cyber-red);
+  border-radius: 5px;
+  padding: 5px 9px;
+  font-size: 0.71rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.rec-mix-btn.recording {
+  background: var(--cyber-red);
+  color: #ffffff;
+}
+
+/* Row 2: Song Scenes + 16-Step Visual Neon Beat Grid */
+.scene-matrix-strip {
+  background: #050812;
+  border-bottom: 1px solid rgba(0, 245, 255, 0.2);
+  padding: 4px 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  z-index: 16;
+}
+
+.scenes-group, .step-matrix-wrap {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.strip-lbl {
+  font-size: 0.64rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  color: var(--cyber-yellow);
+}
+
+.scene-btn {
+  background: #101830;
+  color: var(--text-main);
+  border: 1px solid rgba(0, 245, 255, 0.26);
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 0.69rem;
+  font-weight: 800;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.scene-btn.active {
+  background: rgba(0, 245, 255, 0.26);
+  border-color: var(--cyber-cyan);
+  color: #ffffff;
+}
+
+.scene-btn.scene-climax {
+  background: linear-gradient(90deg, rgba(255, 0, 85, 0.32), rgba(252, 238, 10, 0.25));
+  border-color: var(--cyber-red);
+}
+
+.scene-btn.scene-stop {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: var(--text-dim);
+}
+
+.step-matrix {
+  display: flex;
+  gap: 3px;
+}
+
+.step-cell {
+  width: 16px;
+  height: 18px;
+  border-radius: 3px;
+  background: #0d1428;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  cursor: pointer;
+  padding: 0;
+  touch-action: manipulation;
+}
+
+.step-cell.has-kick {
+  background: rgba(255, 28, 247, 0.45);
+  border-color: var(--cyber-pink);
+}
+
+.step-cell.has-snare {
+  background: rgba(252, 238, 10, 0.55);
+  border-color: var(--cyber-yellow);
+}
+
+.step-cell.has-custom {
+  background: rgba(0, 255, 149, 0.55);
+  border-color: var(--cyber-green);
+}
+
+.step-cell.playhead {
+  outline: 2px solid #ffffff;
+  background: var(--cyber-cyan);
+}
+
+/* Riff Recording Progress Banner */
+.rec-banner {
+  background: #220614;
+  border-bottom: 1px solid var(--cyber-red);
+  padding: 5px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #ffc2d4;
+  z-index: 18;
+}
+
+.rec-banner.hidden {
+  display: none;
+}
+
+.rec-progress-track {
+  flex: 0 0 220px;
+  height: 7px;
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.rec-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--cyber-yellow), var(--cyber-pink), var(--cyber-cyan));
+}
+
+/* Row 3: Playable Multi-Color Neon Stage */
+.stage-wrap {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  min-height: 200px;
+  overflow: hidden;
+  touch-action: none;
+  cursor: crosshair;
+  background-color: var(--bg-deep);
+}
+
+#synth-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+
+.zone-labels {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.zone-band {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 6px 12px;
+  border-bottom: 1px dashed rgba(252, 238, 10, 0.1);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: rgba(141, 162, 198, 0.28);
+}
+
+.zone-band:last-child {
+  border-bottom: none;
+}
+
+.zone-hint {
+  font-size: 0.61rem;
+  color: rgba(0, 245, 255, 0.26);
+}
+
+/* Row 4: Full Cyberpunk DJ Console */
+.cyber-console {
+  background: #060811;
+  border-top: 2px solid rgba(0, 245, 255, 0.38);
+  padding: 7px 10px;
+  display: grid;
+  grid-template-columns: 1.15fr 1.25fr 1fr;
+  gap: 8px;
+  z-index: 20;
+}
+
+@media (max-width: 1080px) {
+  .cyber-console {
+    grid-template-columns: 1fr;
+  }
+}
+
+.console-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(0, 245, 255, 0.18);
+  border-radius: 7px;
+  padding: 6px 9px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.card-title {
+  font-size: 0.65rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  color: var(--cyber-yellow);
+}
+
+.card-sub {
+  font-size: 0.62rem;
+  color: var(--text-dim);
+}
+
+.speed-ctrl {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--cyber-cyan);
+}
+
+.speed-ctrl input[type="range"] {
+  width: 72px;
+  height: 12px;
+  accent-color: var(--cyber-yellow);
+  cursor: pointer;
+}
+
+/* Dual Spinning Neon Holo-Turntables + Crossfader */
+.turntable-deck {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.jog-wheel {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: #060913;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  touch-action: none;
+  flex-shrink: 0;
+}
+
+.jog-cyan {
+  border: 2px solid var(--cyber-cyan);
+}
+
+.jog-pink {
+  border: 2px solid var(--cyber-pink);
+}
+
+.jog-ring {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.jog-marker {
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  width: 4px;
+  height: 8px;
+  margin-left: -2px;
+  border-radius: 2px;
+  background: var(--cyber-yellow);
+}
+
+.jog-lbl {
+  font-size: 0.54rem;
+  font-weight: 900;
+  line-height: 1.1;
+  color: #ffffff;
+  pointer-events: none;
+}
+
+.jog-lbl small {
+  display: block;
+  font-size: 0.48rem;
+  color: var(--cyber-yellow);
+}
+
+.mixer-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.xfader-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.xfader-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.56rem;
+  font-weight: 900;
+  color: var(--text-dim);
+}
+
+.xfader-wrap input[type="range"] {
+  width: 100%;
+  height: 14px;
+  accent-color: var(--cyber-pink);
+  cursor: pointer;
+}
+
+/* Punch-In Kaoss Glitch FX & Cyber Vocoder Grid */
+.fx-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+}
+
+.kaoss-btn, .vox-btn {
+  min-height: 29px;
+  border-radius: 5px;
+  padding: 3px 5px;
+  font-size: 0.67rem;
+  font-weight: 800;
+  cursor: pointer;
+  touch-action: none;
+  white-space: nowrap;
+}
+
+.kaoss-btn {
+  background: rgba(0, 245, 255, 0.11);
+  border: 1px solid rgba(0, 245, 255, 0.38);
+  color: #d6fbff;
+}
+
+.kaoss-btn.engaged {
+  background: var(--cyber-cyan);
+  color: #03040a;
+  border-color: #ffffff;
+}
+
+.vox-btn {
+  background: rgba(168, 85, 247, 0.18);
+  border: 1px solid rgba(168, 85, 247, 0.48);
+  color: #eddfff;
+}
+
+.vox-btn:active {
+  background: var(--cyber-violet);
+  color: #ffffff;
+}
+
+.vox-btn.vox-drop {
+  background: rgba(255, 0, 85, 0.28);
+  border-color: var(--cyber-red);
+  color: #ffffff;
+}
+
+/* Stems & Riff Loopers */
+.stems-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.stem-btn, .riff-btn {
+  min-height: 29px;
+  border-radius: 5px;
+  padding: 3px 6px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: #131b34;
+  color: var(--text-main);
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.stem-btn.active {
+  background: rgba(0, 255, 149, 0.22);
+  border-color: var(--cyber-green);
+  color: #ffffff;
+}
+
+.riff-btn.waiting {
+  background: rgba(252, 238, 10, 0.25);
+  border-color: var(--cyber-yellow);
+  color: var(--cyber-yellow);
+}
+
+.riff-btn.recording {
+  background: rgba(255, 0, 85, 0.45);
+  border-color: #ff9ec0;
+  color: #ffffff;
+}
+
+.riff-btn.playing {
+  background: rgba(0, 245, 255, 0.26);
+  border-color: var(--cyber-cyan);
+  color: #ffffff;
+}
+
+.riff-btn.muted {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-dim);
+}
+
+.clear-btn {
+  background: rgba(255, 0, 85, 0.16);
+  color: #ff9ec0;
+  border: 1px solid rgba(255, 0, 85, 0.38);
+  border-radius: 4px;
+  padding: 1px 7px;
+  font-size: 0.62rem;
+  font-weight: 800;
+  cursor: pointer;
+}
